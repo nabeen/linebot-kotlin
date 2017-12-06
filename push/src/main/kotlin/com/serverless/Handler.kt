@@ -5,18 +5,17 @@ import com.amazonaws.services.lambda.runtime.RequestHandler
 import com.linecorp.bot.client.LineMessagingServiceBuilder
 import com.linecorp.bot.model.PushMessage
 import com.linecorp.bot.model.message.TextMessage
-import jdk.internal.util.xml.impl.Input
 import org.apache.log4j.Logger
 
 import java.io.IOException
 
-class Handler : RequestHandler<Input, ApiGatewayResponse> {
+class Handler : RequestHandler<Map<String, String>, ApiGatewayResponse> {
 
     /***
      * Messaging APIを使用して、Push messageの送信などを行います。
      */
-    private fun push() {
-        val textMessage = TextMessage("hello");
+    private fun push(sendMessage: String) {
+        val textMessage = TextMessage(sendMessage);
         val pushMessage = PushMessage(USER_ID, textMessage);
 
         val client = LineMessagingServiceBuilder.create(CHANNEL_ACCESS_TOKEN).build()
@@ -33,10 +32,9 @@ class Handler : RequestHandler<Input, ApiGatewayResponse> {
         }
     }
 
-    override fun handleRequest(input: Input, context: Context): ApiGatewayResponse {
-
+    override fun handleRequest(input: Map<String, String>, context: Context): ApiGatewayResponse {
         try {
-            push()
+            push(input.get("message")!!)
         } catch (e: Exception) {
             LOG.error(e)
         }
