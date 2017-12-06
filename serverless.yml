@@ -81,6 +81,17 @@ functions:
     package:
       artifact: reply/build/distributions/reply.zip
 
+  push:
+    handler: com.serverless.Handler
+    environment:
+      CHANNEL_SECRET: ${self:custom.otherfile.environment.${self:provider.stage}.CHANNEL_SECRET}
+      CHANNEL_ACCESS_TOKEN: ${self:custom.otherfile.environment.${self:provider.stage}.CHANNEL_ACCESS_TOKEN}
+      USER_ID: ${self:custom.otherfile.environment.${self:provider.stage}.USER_ID}
+    package:
+      artifact: push/build/distributions/push.zip
+    events:
+      - schedule: cron(0 4 * * ? *)
+
 # you can add CloudFormation resource templates here
 resources:
   Resources:
