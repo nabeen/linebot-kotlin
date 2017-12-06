@@ -6,7 +6,6 @@ import org.apache.log4j.Logger
 
 import java.nio.charset.StandardCharsets
 import java.util.Base64
-import java.util.Collections
 
 class ApiGatewayResponse(val statusCode: Int, val body: String?, val headers: Map<String, String>, // API Gateway expects the property to be called "isBase64Encoded" => isIs
                          val isIsBase64Encoded: Boolean) {
@@ -22,51 +21,6 @@ class ApiGatewayResponse(val statusCode: Int, val body: String?, val headers: Ma
 
         fun setStatusCode(statusCode: Int): Builder {
             this.statusCode = statusCode
-            return this
-        }
-
-        fun setHeaders(headers: Map<String, String>): Builder {
-            this.headers = headers
-            return this
-        }
-
-        /**
-         * Builds the [ApiGatewayResponse] using the passed raw body string.
-         */
-        fun setRawBody(rawBody: String): Builder {
-            this.rawBody = rawBody
-            return this
-        }
-
-        /**
-         * Builds the [ApiGatewayResponse] using the passed object body
-         * converted to JSON.
-         */
-        fun setObjectBody(objectBody: Any): Builder {
-            this.objectBody = objectBody
-            return this
-        }
-
-        /**
-         * Builds the [ApiGatewayResponse] using the passed binary body
-         * encoded as base64. [ setBase64Encoded(true)][.setBase64Encoded] will be in invoked automatically.
-         */
-        fun setBinaryBody(binaryBody: ByteArray): Builder {
-            this.binaryBody = binaryBody
-            setBase64Encoded(true)
-            return this
-        }
-
-        /**
-         * A binary or rather a base64encoded responses requires
-         *
-         *  1. "Binary Media Types" to be configured in API Gateway
-         *  1. a request with an "Accept" header set to one of the "Binary Media
-         * Types"
-         *
-         */
-        fun setBase64Encoded(base64Encoded: Boolean): Builder {
-            this.base64Encoded = base64Encoded
             return this
         }
 
@@ -97,7 +51,6 @@ class ApiGatewayResponse(val statusCode: Int, val body: String?, val headers: Ma
     }
 
     companion object {
-        @JvmStatic
         fun builder(): Builder {
             return Builder()
         }
