@@ -36,7 +36,8 @@ class Handler : RequestHandler<DynamodbEvent, ApiGatewayResponse> {
                 val content = messageEvent.message
 
                 if (content is TextMessageContent) {
-                    val message = content.text
+                    val randWord = RandomWord()
+                    val message = randWord.getter(content.text)
 
                     val client = LineMessagingServiceBuilder.create(CHANNEL_ACCESS_TOKEN).build()
 
