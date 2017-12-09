@@ -21,6 +21,7 @@ $ touch ./config/prod/environment.yml
 CHANNEL_SECRET: FOO
 CHANNEL_ACCESS_TOKEN: BAR
 USER_ID: HOGE
+TABLE_NAME: PIYO
 ```
 
 ### Deploy on your AWS!!

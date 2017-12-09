@@ -77,7 +77,7 @@ class Handler : RequestHandler<Request, ApiGatewayResponse> {
         val item = HashMap<String, AttributeValue>()
         item.put("id", AttributeValue(signature))
         item.put("message", AttributeValue(body))
-        val itemRequest = PutItemRequest("LineBotDynamodb", item)
+        val itemRequest = PutItemRequest(TABLE_NAME, item)
         val result = dynamoDb.putItem(itemRequest)
         LOG.debug(result.toString())
 
@@ -89,5 +89,6 @@ class Handler : RequestHandler<Request, ApiGatewayResponse> {
         private val LOG = Logger.getLogger(Handler::class.java)
 
         private val CHANNEL_SECRET = System.getenv("CHANNEL_SECRET")
+        private val TABLE_NAME = System.getenv("TABLE_NAME")
     }
 }
