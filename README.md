@@ -20,6 +20,7 @@ $ touch ./config/prod/environment.yml
 ```yml
 CHANNEL_SECRET: FOO
 CHANNEL_ACCESS_TOKEN: BAR
+USER_ID: HOGE
 ```
 
 ### Deploy on your AWS!!
