@@ -38,10 +38,11 @@ provider:
       Resource: 
         - arn:aws:dynamodb:*:*:table/${self:custom.otherfile.environment.${self:provider.stage}.TABLE_NAME}
         - Fn::GetAtt: [LineBotDynamodb, StreamArn]
-
-#  environment:
-#    CHANNEL_SECRET: ${env:CHANNEL_SECRET}
-#    CHANNEL_ACCESS_TOKEN: ${env:CHANNEL_ACCESS_TOKEN}
+  environment:
+    CHANNEL_SECRET: ${self:custom.otherfile.environment.${self:provider.stage}.CHANNEL_SECRET}
+    CHANNEL_ACCESS_TOKEN: ${self:custom.otherfile.environment.${self:provider.stage}.CHANNEL_ACCESS_TOKEN}
+    TABLE_NAME: ${self:custom.otherfile.environment.${self:provider.stage}.TABLE_NAME}
+    USER_ID: ${self:custom.otherfile.environment.${self:provider.stage}.USER_ID}
 
 custom:
   defaultStage: dev
@@ -56,10 +57,6 @@ package:
 functions:
   webhook:
     handler: com.serverless.Handler
-    environment:
-      CHANNEL_SECRET: ${self:custom.otherfile.environment.${self:provider.stage}.CHANNEL_SECRET}
-      CHANNEL_ACCESS_TOKEN: ${self:custom.otherfile.environment.${self:provider.stage}.CHANNEL_ACCESS_TOKEN}
-      TABLE_NAME: ${self:custom.otherfile.environment.${self:provider.stage}.TABLE_NAME}
     package:
       artifact: webhook/build/distributions/webhook.zip
     events:
@@ -76,37 +73,34 @@ functions:
 
   reply:
     handler: com.serverless.Handler
-    environment:
-      CHANNEL_SECRET: ${self:custom.otherfile.environment.${self:provider.stage}.CHANNEL_SECRET}
-      CHANNEL_ACCESS_TOKEN: ${self:custom.otherfile.environment.${self:provider.stage}.CHANNEL_ACCESS_TOKEN}
     package:
       artifact: reply/build/distributions/reply.zip
 
   push:
     handler: com.serverless.Handler
-    environment:
-      CHANNEL_SECRET: ${self:custom.otherfile.environment.${self:provider.stage}.CHANNEL_SECRET}
-      CHANNEL_ACCESS_TOKEN: ${self:custom.otherfile.environment.${self:provider.stage}.CHANNEL_ACCESS_TOKEN}
-      USER_ID: ${self:custom.otherfile.environment.${self:provider.stage}.USER_ID}
     package:
       artifact: push/build/distributions/push.zip
     events:
       - schedule:
           rate: cron(0 0 ? * MON-FRI *)
+          enabled: ${self:custom.otherfile.environment.${self:provider.stage}.NOTIFICATION}
           input:
-            message: 'Hey Guys, Good Morning.'
+            message: '朝だー！'
       - schedule:
           rate: cron(0 4 ? * MON-FRI *)
+          enabled: ${self:custom.otherfile.environment.${self:provider.stage}.NOTIFICATION}
           input:
-            message: 'Hey Guys, Lunch Time.'
+            message: 'ランチタイムだよー！'
       - schedule:
           rate: cron(0 11 ? * MON-FRI *)
+          enabled: ${self:custom.otherfile.environment.${self:provider.stage}.NOTIFICATION}
           input:
-            message: 'Hey Guys, Go Home.'
+            message: '帰る時間だよー！'
       - schedule:
           rate: cron(0 17 ? * MON-FRI *)
+          enabled: ${self:custom.otherfile.environment.${self:provider.stage}.NOTIFICATION}
           input:
-            message: 'Hey Guys, Good Night.'
+            message: '寝る時間だよー！'
 
 # you can add CloudFormation resource templates here
 resources:
