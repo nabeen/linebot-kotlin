@@ -84,19 +84,19 @@ functions:
       - schedule:
           rate: cron(0 0 ? * MON-FRI *)
           input:
-            message: 'Hey Guys, Good Morning.'
+            message: '朝だー！'
       - schedule:
           rate: cron(0 4 ? * MON-FRI *)
           input:
-            message: 'Hey Guys, Lunch Time.'
+            message: 'ランチタイムだよー！'
       - schedule:
           rate: cron(0 11 ? * MON-FRI *)
           input:
-            message: 'Hey Guys, Go Home.'
+            message: '帰る時間だよー！'
       - schedule:
           rate: cron(0 17 ? * MON-FRI *)
           input:
-            message: 'Hey Guys, Good Night.'
+            message: '寝る時間だよー！'
 
 # you can add CloudFormation resource templates here
 resources:
