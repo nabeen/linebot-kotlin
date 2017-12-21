@@ -83,18 +83,22 @@ functions:
     events:
       - schedule:
           rate: cron(0 0 ? * MON-FRI *)
+          enabled: ${self:custom.otherfile.environment.${self:provider.stage}.NOTIFICATION}
           input:
             message: '朝だー！'
       - schedule:
           rate: cron(0 4 ? * MON-FRI *)
+          enabled: ${self:custom.otherfile.environment.${self:provider.stage}.NOTIFICATION}
           input:
             message: 'ランチタイムだよー！'
       - schedule:
           rate: cron(0 11 ? * MON-FRI *)
+          enabled: ${self:custom.otherfile.environment.${self:provider.stage}.NOTIFICATION}
           input:
             message: '帰る時間だよー！'
       - schedule:
           rate: cron(0 17 ? * MON-FRI *)
+          enabled: ${self:custom.otherfile.environment.${self:provider.stage}.NOTIFICATION}
           input:
             message: '寝る時間だよー！'
 
